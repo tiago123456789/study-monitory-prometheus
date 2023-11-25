@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: nestjs-metrics
+  name: nestjs-metrics
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nestjs-metrics
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: nestjs-metrics
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/path: /metrics
+        prometheus.io/port: "3000"
+    spec:
+      containers:
+      - image: tiagorosadacosta123456/study-monitory-prometheus
+        imagePullPolicy: Always
+        resources:
+          limits:
+            cpu: 250m
+          requests:
+            cpu: 200m
+        name: study-monitoring-prometheus
+        ports:
+        - containerPort: 3000
