@@ -4,7 +4,7 @@ serverFiles:
       - name: AppNest
         rules:
           - alert: AppDown
-            expr: up == 0
+            expr: sum_over_time(up{app="nestjs-metrics"}[1m]) == 0
             for: 1m
             labels:
               level: high
