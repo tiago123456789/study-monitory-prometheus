@@ -1,0 +1,49 @@
+version: "3"
+
+services:
+
+  app_nest:
+    image: tiagorosadacosta123456/study-monitory-prometheus
+    container_name: app_nest
+    networks:
+      - monitor
+    ports:
+      - 3000:3000
+
+  prometheus:
+    image: prom/prometheus
+    volumes:
+      - "./infra/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml"
+      - "./infra/prometheus/rules.yml:/etc/prometheus/rules.yml"
+    networks:
+      - monitor
+    ports:
+      - 9090:9090
+
+
+  alert-manager:
+    image: prom/alertmanager
+    volumes:
+      - "./infra/prometheus/alertmanager.yml:/etc/alertmanager/alertmanager.yml"
+    networks:
+      - monitor
+    ports:
+      - 9093:9093
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    ports:
+      - 3005:3000
+    networks:
+      - monitor
+    restart: unless-stopped
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=grafana
+    volumes:
+      - ./infra/grafana:/etc/grafana/provisioning/datasources
+
+networks:
+  monitor:
+    driver: bridge

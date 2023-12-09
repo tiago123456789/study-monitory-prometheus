@@ -1,0 +1,23 @@
+global:
+  scrape_interval: 10s
+
+rule_files:
+  - rules.yml
+
+alerting:
+  alertmanagers:
+   - static_configs:
+     - targets:
+        - alert-manager:9093
+
+scrape_configs:
+ - job_name: prometheus
+   static_configs:
+    - targets:
+       - prometheus:9090
+ - job_name: app_nest
+   static_configs:
+    - targets:
+       - app_nest:3000
+
+  

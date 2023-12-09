@@ -31,6 +31,11 @@ import { TaskScheduler } from './app.schedule';
       help: 'The time to complete background jobs',
       labelNames: ['name'],
     }),
+    makeHistogramProvider({
+      name: 'time_complete_request',
+      help: 'Time spended to complete api requests',
+      labelNames: ['method', 'path'],
+    }),
   ],
 })
 export class AppModule {}

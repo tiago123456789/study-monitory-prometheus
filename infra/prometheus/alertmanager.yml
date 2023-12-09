@@ -1,0 +1,26 @@
+global:
+route:
+  receiver: notify-via-discord
+  group_by: [notifier]
+
+  routes:
+    - match:
+      receiver: notify-via-email
+      continue: true
+
+    - match:
+      receiver: notify-via-discord
+      continue: true
+
+receivers:
+  - name: notify-via-email
+    email_configs:
+    - to: "tiagorosadacost@gmail.com"
+      from: "alert@app.com.br"
+      smarthost: "sandbox.smtp.mailtrap.io:25"
+      auth_username: 57989fdbe1dd55
+      auth_password: e1767817dd3d67
+  - name: notify-via-discord
+    discord_configs:
+    - webhook_url: https://discord.com/api/webhooks/1147978853139103834/0Lb3ccGvQRQ8L_J_4PsBDFD8Hd6HRka5Db1X3tlpCF-lcQ92liQDI6gWpxG8G_Ak0kop
+

@@ -1,0 +1,29 @@
+groups:
+  - name: AppNest
+    rules:
+    - alert: AppDown
+      expr: up == 0
+      for: 1m
+      labels:
+        level: high
+      annotations:
+        title: "The application down"
+        description: "The application down more than 1 minute, so hurry up try look what's happenning"
+
+    - alert: AppCpuUtilizationHigher
+      expr: (irate(process_cpu_user_seconds_total{job="app_nest"}[2m]) * 100) > 30
+      for: 2m
+      labels:
+        level: cpu_high
+      annotations:
+        title: "The cpu utilization is higher"
+        description: "The application cpu utilization more than 30%"
+
+    - alert: AppTimeCompleteRequestInSeconds
+      expr: ( ( rate(time_complete_request_sum[5m]) / rate(time_complete_request_count[5m]) ) * 100 ) > 5
+      for: 2m
+      labels:
+        level: time_complete_request_higher
+      annotations:
+        title: "The time complete request is higher"
+        description: "The application spending more than 5 seconds to complete request"

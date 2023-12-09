@@ -36,3 +36,6 @@ lerna-debug.log*
 
 .env
 .env.testing
+.env
+k8s/prometheus-values.yaml
+infra/alertmanager
